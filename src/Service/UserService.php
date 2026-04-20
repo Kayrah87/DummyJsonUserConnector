@@ -6,11 +6,20 @@ namespace Kayrah87\DummyJsonUserConnector\Service;
 
 use Kayrah87\DummyJsonUserConnector\Dto\User;
 use Kayrah87\DummyJsonUserConnector\Dto\UserPage;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class UserService
 {
     public function __construct(
+        private ClientInterface $client,
+        private RequestFactoryInterface $requestFactory,
+        private StreamFactoryInterface $streamFactory,
         private string $baseUri = 'https://dummyjson.com',
+        private LoggerInterface $logger = new NullLogger(),
     ) {
     }
 

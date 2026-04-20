@@ -21,4 +21,9 @@ class UserPage implements JsonSerializable
     {
         //Serialize
     }
+
+    public static function fromApiArray(array $apiArray): self
+    {
+        //Implement
+    }
 }
