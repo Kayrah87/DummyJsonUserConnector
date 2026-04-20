@@ -25,8 +25,7 @@ class User implements JsonSerializable
         public string $firstName,
         public string $lastName,
         public string $email,
-    ) {
-    }
+    ) {}
 
     /**
      * Construct a User from a decoded DummyJSON API payload.

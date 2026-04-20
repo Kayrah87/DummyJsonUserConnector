@@ -35,8 +35,7 @@ class UserPage implements JsonSerializable, Countable, IteratorAggregate
         public int $total,
         public int $skip,
         public int $limit,
-    ) {
-    }
+    ) {}
 
     /**
      * Construct a UserPage from a decoded DummyJSON list response.
@@ -83,7 +82,7 @@ class UserPage implements JsonSerializable, Countable, IteratorAggregate
     public function toArray(): array
     {
         return [
-            'users' => \array_map(static fn (User $u): array => $u->toArray(), $this->items),
+            'users' => \array_map(static fn(User $u): array => $u->toArray(), $this->items),
             'total' => $this->total,
             'skip' => $this->skip,
             'limit' => $this->limit,

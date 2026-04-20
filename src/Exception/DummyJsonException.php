@@ -10,6 +10,4 @@ namespace Kayrah87\DummyJsonUserConnector\Exception;
  * Consumers can `catch (DummyJsonException $e)` to trap any failure from
  * the connector without being tied to a specific concrete class.
  */
-interface DummyJsonException
-{
-}
+interface DummyJsonException {}

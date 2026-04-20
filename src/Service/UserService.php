@@ -50,8 +50,7 @@ class UserService
         private StreamFactoryInterface $streamFactory,
         private string $baseUri = 'https://dummyjson.com',
         private LoggerInterface $logger = new NullLogger(),
-    ) {
-    }
+    ) {}
 
     /**
      * Construct a service using auto-discovered PSR-18 and PSR-17 implementations.
