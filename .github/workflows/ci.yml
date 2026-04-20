@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    # Nightly run at 06:00 UTC catches upstream DummyJSON API drift
+    # even when nothing has been pushed.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
 
 env:
   # Silences the "Node 20 is deprecated" warning by opting every JS action
@@ -93,7 +98,10 @@ jobs:
   integration:
     name: Integration (PHP 8.4, live DummyJSON)
     runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    # Runs on push-to-main, nightly cron, and manual dispatch.
+    # Skipped on pull requests to keep PR feedback fast and avoid hammering
+    # the live API from every PR push.
+    if: github.event_name != 'pull_request'
 
     steps:
       - name: Checkout
