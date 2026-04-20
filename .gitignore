@@ -1,0 +1,41 @@
+# Composer
+/vendor/
+composer.lock
+
+# PHPUnit
+/.phpunit.cache/
+.phpunit.result.cache
+/build/
+/coverage/
+coverage.xml
+coverage.clover
+/.phpunit.coverage/
+
+# PHPStan
+/.phpstan.cache/
+phpstan.neon
+!phpstan.neon.dist
+
+# PHP CS Fixer / Pint
+.php-cs-fixer.cache
+.php_cs.cache
+.pint.cache
+
+# Rector
+/.rector.cache/
+
+# Environment / local config
+.env
+.env.local
+.env.*.local
+
+# IDEs / editors
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
