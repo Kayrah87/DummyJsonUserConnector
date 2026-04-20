@@ -334,6 +334,10 @@ composer lint             # php-cs-fixer dry-run (read-only)
 composer fix              # php-cs-fixer write mode
 composer stan             # PHPStan max + strict-rules + phpunit rules
 composer ci               # full local CI: lint → stan → coverage → threshold
+
+---or---
+
+composer verify           # Runs fix (writes) then stan, unit tests, integration tests, coverage, threshold check. Use before committing to verify code quality.
 ```
 
 The integration suite is opt-in (separate PHPUnit suite) — running

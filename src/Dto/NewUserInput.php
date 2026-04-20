@@ -19,16 +19,17 @@ use Kayrah87\DummyJsonUserConnector\Exception\ValidationException;
  * Because validation runs in the constructor, any instance is guaranteed to
  * carry clean values — no further checks needed at the call site.
  */
-class NewUserInput implements JsonSerializable
+final readonly class NewUserInput implements JsonSerializable
 {
+    public string $firstName;
+    public string $lastName;
+    public string $email;
+
     /**
      * @throws ValidationException If any field is empty/whitespace-only, contains control characters, or (for email) is not a valid address.
      */
-    public function __construct(
-        public string $firstName,
-        public string $lastName,
-        public string $email,
-    ) {
+    public function __construct(string $firstName, string $lastName, string $email)
+    {
         $this->firstName = self::normaliseString('firstName', $firstName);
         $this->lastName = self::normaliseString('lastName', $lastName);
         $this->email = self::normaliseEmail($email);

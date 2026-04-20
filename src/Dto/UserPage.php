@@ -25,7 +25,7 @@ use Traversable;
  *
  * @implements IteratorAggregate<int, User>
  */
-class UserPage implements JsonSerializable, Countable, IteratorAggregate
+final readonly class UserPage implements JsonSerializable, Countable, IteratorAggregate
 {
     /**
      * @param list<User> $items

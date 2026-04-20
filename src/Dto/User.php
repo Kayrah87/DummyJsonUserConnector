@@ -18,7 +18,7 @@ use Kayrah87\DummyJsonUserConnector\Exception\InvalidResponseException;
  * snake_case or other conventions are responsible for translating into
  * their own stack.
  */
-class User implements JsonSerializable
+final readonly class User implements JsonSerializable
 {
     public function __construct(
         public int $id,

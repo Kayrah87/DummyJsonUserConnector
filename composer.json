@@ -61,6 +61,14 @@
             "@stan",
             "@test:coverage",
             "@check-coverage"
+        ],
+        "verify": [
+            "@fix",
+            "@stan",
+            "@test",
+            "@test:integration",
+            "@test:coverage",
+            "@check-coverage"
         ]
     },
     "scripts-descriptions": {
@@ -71,7 +79,8 @@
         "lint": "Check code style without modifying files (php-cs-fixer dry-run).",
         "fix": "Apply code-style fixes (php-cs-fixer write).",
         "stan": "Run PHPStan static analysis.",
-        "ci": "Full CI pipeline: lint, stan, coverage, threshold check."
+        "ci": "Full CI pipeline: lint, stan, coverage, threshold check.",
+        "verify": "Local 'do everything' button: fix (writes) then stan, unit tests, integration tests, coverage, threshold check."
     },
     "config": {
         "sort-packages": true,

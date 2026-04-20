@@ -6,7 +6,13 @@ Date: 2026-04-20
 
 Built for a technical challenge for Plentific. **Not to be published to Packagist.**
 
-AI Usage Level: Research and Task Analysis ONLY.
+AI Used for:
+- Interpreting plan into this task document and exploring technical questions
+- Scaffolding the repo
+- Providing technical advice during the build
+- Error/Bug Analysis
+- Test Coverage suggestions
+- Code Review and refactoring suggestions
 
 ---
 
