@@ -1,0 +1,83 @@
+{
+    "name": "kayrah87/dummyjson-user-connector",
+    "description": "A framework-agnostic PHP 8.4 connector for the DummyJSON users API.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "dummyjson",
+        "psr-18",
+        "psr-17",
+        "http-client",
+        "users"
+    ],
+    "authors": [
+        {
+            "name": "Kayleigh Whitehurst",
+            "email": "kayleigh.whitehurst@outlook.com"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "php-http/discovery": "^1.19",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0 || ^2.0",
+        "psr/log": "^3.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "nyholm/psr7": "^1.8",
+        "php-http/mock-client": "^1.6",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "suggest": {
+        "psr/http-client-implementation": "A PSR-18 HTTP client is required at runtime. Any of: guzzlehttp/guzzle, symfony/http-client, or php-http/guzzle7-adapter.",
+        "psr/http-factory-implementation": "A PSR-17 factory implementation is required at runtime. Any of: nyholm/psr7, guzzlehttp/psr7, or http-interop/http-factory-guzzle."
+    },
+    "autoload": {
+        "psr-4": {
+            "Kayrah87\\DummyJsonUserConnector\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kayrah87\\DummyJsonUserConnector\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --testsuite=unit",
+        "test:integration": "phpunit --testsuite=integration",
+        "test:coverage": "phpunit --testsuite=unit --coverage-clover=build/logs/clover.xml",
+        "check-coverage": "php scripts/check-coverage.php build/logs/clover.xml 90",
+        "lint": "php-cs-fixer fix --dry-run --diff",
+        "fix": "php-cs-fixer fix",
+        "stan": "phpstan analyse",
+        "ci": [
+            "@lint",
+            "@stan",
+            "@test:coverage",
+            "@check-coverage"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Run the hermetic unit test suite.",
+        "test:integration": "Run the integration test suite (hits the live DummyJSON API).",
+        "test:coverage": "Run unit tests with coverage (clover XML at build/logs/clover.xml).",
+        "check-coverage": "Enforce the 90% line-coverage threshold against the clover report.",
+        "lint": "Check code style without modifying files (php-cs-fixer dry-run).",
+        "fix": "Apply code-style fixes (php-cs-fixer write).",
+        "stan": "Run PHPStan static analysis.",
+        "ci": "Full CI pipeline: lint, stan, coverage, threshold check."
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
