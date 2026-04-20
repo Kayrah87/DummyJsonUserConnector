@@ -51,7 +51,7 @@
     "scripts": {
         "test": "phpunit --testsuite=unit",
         "test:integration": "phpunit --testsuite=integration",
-        "test:coverage": "phpunit --testsuite=unit --coverage-clover=build/logs/clover.xml",
+        "test:coverage": "XDEBUG_MODE=coverage phpunit --testsuite=unit --coverage-clover=build/logs/clover.xml",
         "check-coverage": "php scripts/check-coverage.php build/logs/clover.xml 90",
         "lint": "php-cs-fixer fix --dry-run --diff",
         "fix": "php-cs-fixer fix",

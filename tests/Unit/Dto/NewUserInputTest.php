@@ -93,4 +93,43 @@ final class NewUserInputTest extends TestCase
 
         self::assertSame($input->toArray(), $input->jsonSerialize());
     }
+
+    #[Test]
+    public function fromApiArrayBuildsFromValidPayload(): void
+    {
+        $input = NewUserInput::fromApiArray([
+            'firstName' => 'Alice',
+            'lastName' => 'Smith',
+            'email' => 'alice@example.com',
+        ]);
+
+        self::assertSame('Alice', $input->firstName);
+        self::assertSame('Smith', $input->lastName);
+        self::assertSame('alice@example.com', $input->email);
+    }
+
+    #[Test]
+    public function fromApiArrayThrowsOnMissingField(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        NewUserInput::fromApiArray(['firstName' => 'Alice', 'lastName' => 'Smith']);
+    }
+
+    #[Test]
+    public function fromApiArrayThrowsOnNonStringField(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        NewUserInput::fromApiArray(['firstName' => 42, 'lastName' => 'Smith', 'email' => 'a@b.c']);
+    }
+
+    #[Test]
+    public function fromApiArrayRunsValidationAfterExtraction(): void
+    {
+        // Missing field check happens first; empty string would fail validation after.
+        $this->expectException(ValidationException::class);
+
+        NewUserInput::fromApiArray(['firstName' => '   ', 'lastName' => 'Smith', 'email' => 'a@b.c']);
+    }
 }

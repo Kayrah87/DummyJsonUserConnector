@@ -7,13 +7,19 @@ namespace Kayrah87\DummyJsonUserConnector\Tests\Unit\Service;
 use Http\Mock\Client as MockClient;
 use Kayrah87\DummyJsonUserConnector\Dto\User;
 use Kayrah87\DummyJsonUserConnector\Dto\UserPage;
+use Kayrah87\DummyJsonUserConnector\Exception\ApiException;
+use Kayrah87\DummyJsonUserConnector\Exception\InvalidResponseException;
+use Kayrah87\DummyJsonUserConnector\Exception\TransportException;
+use Kayrah87\DummyJsonUserConnector\Exception\UserNotFoundException;
 use Kayrah87\DummyJsonUserConnector\Exception\ValidationException;
 use Kayrah87\DummyJsonUserConnector\Service\UserService;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
+use RuntimeException;
 
 final class UserServiceTest extends TestCase
 {
@@ -243,6 +249,108 @@ final class UserServiceTest extends TestCase
         }
 
         self::assertSame([], $this->mockClient->getRequests());
+    }
+
+    #[Test]
+    public function getUserThrowsUserNotFoundOn404(): void
+    {
+        $this->mockClient->addResponse(new Response(404, [], '{"message":"not found"}'));
+
+        $this->expectException(UserNotFoundException::class);
+
+        $this->service->getUser(999);
+    }
+
+    #[Test]
+    public function getUserThrowsApiExceptionOnServerError(): void
+    {
+        $this->mockClient->addResponse(new Response(500, [], 'server error'));
+
+        $this->expectException(ApiException::class);
+
+        $this->service->getUser(1);
+    }
+
+    #[Test]
+    public function getUserThrowsTransportExceptionOnClientFailure(): void
+    {
+        $this->mockClient->addException(
+            new class ('DNS resolution failure') extends RuntimeException implements ClientExceptionInterface {},
+        );
+
+        $this->expectException(TransportException::class);
+
+        $this->service->getUser(1);
+    }
+
+    #[Test]
+    public function getUserThrowsInvalidResponseOnMalformedJson(): void
+    {
+        $this->mockClient->addResponse(new Response(200, [], '{ not valid json'));
+
+        $this->expectException(InvalidResponseException::class);
+
+        $this->service->getUser(1);
+    }
+
+    #[Test]
+    public function getUserThrowsInvalidResponseWhenBodyIsNotAnObject(): void
+    {
+        $this->mockClient->addResponse(new Response(200, [], '42'));
+
+        $this->expectException(InvalidResponseException::class);
+
+        $this->service->getUser(1);
+    }
+
+    #[Test]
+    public function listUsersThrowsApiExceptionOnServerError(): void
+    {
+        $this->mockClient->addResponse(new Response(500, [], 'server error'));
+
+        $this->expectException(ApiException::class);
+
+        $this->service->listUsers();
+    }
+
+    #[Test]
+    public function listUsersThrowsTransportExceptionOnClientFailure(): void
+    {
+        $this->mockClient->addException(
+            new class ('connection refused') extends RuntimeException implements ClientExceptionInterface {},
+        );
+
+        $this->expectException(TransportException::class);
+
+        $this->service->listUsers();
+    }
+
+    #[Test]
+    public function createUserThrowsValidationExceptionOnApi400(): void
+    {
+        $this->mockClient->addResponse(new Response(400, [], '{"error":"bad input"}'));
+
+        $this->expectException(ValidationException::class);
+
+        $this->service->createUser('Alice', 'Smith', 'alice@example.com');
+    }
+
+    #[Test]
+    public function createUserThrowsApiExceptionOnServerError(): void
+    {
+        $this->mockClient->addResponse(new Response(500, [], 'server error'));
+
+        $this->expectException(ApiException::class);
+
+        $this->service->createUser('Alice', 'Smith', 'alice@example.com');
+    }
+
+    #[Test]
+    public function createFactoryReturnsUserServiceInstance(): void
+    {
+        $service = UserService::create();
+
+        self::assertInstanceOf(UserService::class, $service);
     }
 
     /**
