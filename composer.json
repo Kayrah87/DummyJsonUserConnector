@@ -16,6 +16,10 @@
             "email": "kayleigh.whitehurst@outlook.com"
         }
     ],
+    "support": {
+        "source": "https://github.com/Kayrah87/DummyJsonUserConnector",
+        "docs": "https://dummy.whitehurst.xyz"
+    },
     "require": {
         "php": "^8.4",
         "php-http/discovery": "^1.19",

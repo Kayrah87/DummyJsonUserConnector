@@ -198,5 +198,7 @@ The package was built in this order, matching the "inner → outer" strategy:
 6. Integration tests (4 smoke cases, opt-in suite).
 7. Tooling: `phpstan.neon.dist`, `.php-cs-fixer.dist.php`, `phpunit.xml.dist`.
 8. `scripts/check-coverage.php` and the GitHub Actions CI workflow.
+9. Consumer-facing README split from the design record (this file).
+10. Interactive `examples/` demo site deployed at <https://dummy.whitehurst.xyz>.
 
-Final: **124 unit + 4 integration tests, 100% line coverage, PHPStan max clean, CS-Fixer clean.**
+Final: **124 unit + 4 integration tests, 100% line coverage, PHPStan max clean, CS-Fixer clean, live demo deployed.**

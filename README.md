@@ -4,6 +4,9 @@ A framework-agnostic PHP 8.4 connector for the [DummyJSON](https://dummyjson.com
 users API. Drops into Laravel, Drupal, WordPress, or vanilla PHP with no
 framework coupling.
 
+**Live demo:** <https://dummy.whitehurst.xyz> — interactive pages for each public
+method against the real DummyJSON API.
+
 > For the design record — the 25 locked-in decisions behind every part of this
 > implementation — see [TECHNICAL_TASK.md](TECHNICAL_TASK.md).
 
